@@ -1,0 +1,27 @@
+##Nathan Giblin
+##Tidy Tuesday 2/26/20
+
+#reading in & ordering data
+measles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-25/measles.csv')
+library(maps)
+library(ggplot2)
+RIMeasels <- measles[56266:56495,]
+Risk <- At.risk...Sheet1
+BorderLineS <- BorderLine...Sheet1
+Herd <- HerdImmunity...Sheet1
+
+#generate map of rhode island
+map("state", "Rhode Island", fill = TRUE, col = "grey", bg = "black")
+
+#Fill points on map
+points(Herd$lng, Herd$lat, pch = 20, col = "Blue", cex = .75) 
+points(BorderLineS$lng, BorderLineS$lat, pch = 20, col = "orange", cex = .75)
+points(Risk$lng, Risk$lat, pch = 20, col = "red", cex = .75) 
+
+#Legend & title
+title("Risk of Measels Outbreak by School location", sub = "The CDC recomends that 95% of a schools population should be vacinated to prevent a measels outbreak",
+      cex.main = 1,   font.main= 1, col.main= "dark grey",
+      cex.sub = 0.75, font.sub = 2, col.sub = "red")
+legend("bottomright", inset = -.01, title = "Percent of vacinated Students", legend=c(">95%", "94.9% - 93%","<93" ),
+       col=c("blue", "orange", "red"), pch = 19, cex=0.5,
+       box.lty=0, text.col = "black", bty = 3, text.font = 4, title.)
